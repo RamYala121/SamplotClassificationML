@@ -52,7 +52,7 @@ train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_s
 
 #%% Iterable on dataloader
 dataiter = iter(train_dataloader)
-images, labels = dataiter.next()
+images, labels = next(dataiter)
 
 # Show the batch of input images as grid
 imshow(torchvision.utils.make_grid(images), mean=mean_norm, std=std_norm)

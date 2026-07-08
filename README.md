@@ -6,10 +6,14 @@ for performing a basic binary classification task on the Kaggle
 Dogs vs. Cats dataset (https://www.kaggle.com/c/dogs-vs-cats/data).
 
 ## Preparing the dataset
-1) Download the dataset from Kaggle 
-2) Use the script ``prepare_dataset.py`` in order to split train 
-   samples in two folders.
-  
+1) Put your raw JPEG samplot files in the repo-local ``train`` folder:
+   ``SimpleCNNClassifier/train``
+2) Run ``prepare_dataset.py`` to split the files into ``positive`` and ``negative`` subfolders.
+
+If you also have validation images, put them in ``SimpleCNNClassifier/val`` with the same class structure:
+- ``SimpleCNNClassifier/val/positive``
+- ``SimpleCNNClassifier/val/negative``
+
 ## Training
 Use the script ``train.py`` in order to train a CNN for this purpose.
 
