@@ -1,7 +1,7 @@
 # SamplotClassificationModel
 
-To run SCM download all files in the repo and run **run_gui.bat**
+## To run SamplotClassificationModel, download all files in the repo and run **_run_gui.bat_**
 
-The GUI will open up a menu that asks for an **image** and shows a **preview** of the image selected. 
+The GUI will open up a menu that asks for a **samplot** when you click **_Choose Image_** and shows a **_Preview_** of the image selected. 
 
-You can then click **predict** and then it will analyze and predict whether it is a **gene fusion** (positive) or **not** (negative)
+You can then click **_Predict_** and then it will analyze and predict whether it is a **gene fusion** (_Positive_) or **not** (_Negative_)
