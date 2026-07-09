@@ -44,14 +44,54 @@ def predict_image(net, image_path, classes):
     return label
 
 
+def predict_folder(net, folder_path, classes):
+    files = [f for f in os.listdir(folder_path)
+             if os.path.isfile(os.path.join(folder_path, f))
+             and f.lower().endswith(('.jpg', '.jpeg', '.png', '.bmp', '.tif', '.tiff'))]
+    if not files:
+        print(f"No image files found in folder: {folder_path}")
+        return
+
+    for filename in sorted(files):
+        image_path = os.path.join(folder_path, filename)
+        label = predict_image(net, image_path, classes)
+        print(f"{filename}: {label}")
+
+
 def main():
-    if len(sys.argv) != 2:
-        print("Usage: python predict.py path/to/image.jpg")
+    if len(sys.argv) == 1:
+        home = os.path.expanduser("~")
+        documents_folder = os.path.join(home, "Documents", "test_file")
+        downloads_folder = os.path.join(home, "Downloads", "test_file")
+        onedrive = os.environ.get("OneDrive")
+        onedrive_documents_folder = None
+        if onedrive:
+            onedrive_documents_folder = os.path.join(onedrive, "Documents", "test_file")
+
+        if os.path.exists(documents_folder):
+            path = documents_folder
+        elif onedrive_documents_folder and os.path.exists(onedrive_documents_folder):
+            path = onedrive_documents_folder
+        elif os.path.exists(downloads_folder):
+            path = downloads_folder
+        else:
+            candidates = [documents_folder]
+            if onedrive_documents_folder:
+                candidates.append(onedrive_documents_folder)
+            candidates.append(downloads_folder)
+            print("No default folder found. Create one of these:")
+            for candidate in candidates:
+                print(f"  {candidate}")
+            sys.exit(1)
+        print(f"No path provided; using default folder: {path}")
+    elif len(sys.argv) == 2:
+        path = sys.argv[1]
+    else:
+        print("Usage: python predict.py [path/to/image.jpg or path/to/folder]")
         sys.exit(1)
 
-    image_path = sys.argv[1]
-    if not os.path.isfile(image_path):
-        print(f"File not found: {image_path}")
+    if not os.path.exists(path):
+        print(f"Path not found: {path}")
         sys.exit(1)
 
     model_path = os.path.join('logs', 'dog_vs_cat.pth')
@@ -61,9 +101,12 @@ def main():
 
     net = load_model(model_path)
     classes = get_classes()
-    label = predict_image(net, image_path, classes)
 
-    print(f"Prediction: {label}")
+    if os.path.isdir(path):
+        predict_folder(net, path, classes)
+    else:
+        label = predict_image(net, path, classes)
+        print(f"Prediction: {label}")
 
 
 if __name__ == '__main__':
