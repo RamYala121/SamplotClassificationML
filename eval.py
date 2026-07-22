@@ -60,7 +60,11 @@ y_true_train, y_pred_train = make_pred_on_dataloader(net, train_dataloader)
 cf_train = confusion_matrix(y_true_train, y_pred_train, labels=labels_idxs)
 cr_train = classification_report(y_true_train, y_pred_train, target_names=target_names, output_dict=True)
 
+print("Train classification report:\n")
 print(classification_report(y_true_train, y_pred_train, target_names=target_names, output_dict=False))
+print("Train confusion matrix:")
+print(cf_train)
+print("Train confusion matrix labels:", target_names)
 
 #%% Make prediction on val set
 y_true_test, y_pred_test = make_pred_on_dataloader(net, val_dataloader)
@@ -69,4 +73,8 @@ y_true_test, y_pred_test = make_pred_on_dataloader(net, val_dataloader)
 cf_test = confusion_matrix(y_true_test, y_pred_test, labels=labels_idxs)
 cr_test = classification_report(y_true_test, y_pred_test, target_names=target_names, output_dict=True)
 
+print("Validation classification report:\n")
 print(classification_report(y_true_test, y_pred_test, target_names=target_names, output_dict=False))
+print("Validation confusion matrix:")
+print(cf_test)
+print("Validation confusion matrix labels:", target_names)
