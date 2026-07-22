@@ -69,7 +69,6 @@ def main():
     print(f'Batch size: {args.batch_size}')
 
     y_true, y_pred = make_pred_on_dataloader(net, val_loader)
-
     print('Predicted class counts:', Counter(y_pred))
     print('Actual class counts:', Counter(y_true))
 
